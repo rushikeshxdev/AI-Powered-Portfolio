@@ -83,10 +83,10 @@ The API will be available at:
 
 ```bash
 # Check health endpoint
-curl http://localhost:8000/health
+curl http://localhost:8000/api/health
 
-# Expected response:
-# {"status":"healthy","service":"ai-portfolio-backend"}
+# Expected response (when all services are healthy):
+# {"status":"healthy","timestamp":"2024-01-01T00:00:00Z","services":{"database":true,"vector_store":true}}
 ```
 
 ## API Endpoints
@@ -94,7 +94,7 @@ curl http://localhost:8000/health
 ### Current Endpoints
 
 - `GET /` - Root endpoint with API information
-- `GET /health` - Health check endpoint
+- `GET /api/health` - Health check endpoint (checks database and vector store connectivity)
 
 ### Upcoming Endpoints
 
