@@ -37,7 +37,7 @@ class OpenRouterClient:
             raise ValueError("OpenRouter API key is required")
         
         self.base_url = "https://openrouter.ai/api/v1"
-        self.model = "meta-llama/llama-3.1-8b-instruct:free"
+        self.model = "meta-llama/llama-3.2-3b-instruct:free"
         self.timeout = 30.0  # 30 seconds timeout
         self.max_retries = 3
         self.retry_delays = [1.0, 2.0, 4.0]  # Exponential backoff delays
@@ -125,8 +125,11 @@ class OpenRouterClient:
                         
                         # Check for other HTTP errors
                         if response.status_code != 200:
+                            # Read error body for streaming response
+                            error_body = await response.aread()
+                            error_text = error_body.decode('utf-8') if error_body else 'No error details'
                             logger.error(
-                                f"OpenRouter API error: {response.status_code} - {response.text}"
+                                f"OpenRouter API error: {response.status_code} - {error_text}"
                             )
                             
                             # If this is not the last attempt, wait and retry
@@ -135,6 +138,7 @@ class OpenRouterClient:
                                 logger.info(f"Waiting {delay}s before retry...")
                                 await asyncio.sleep(delay)
                                 continue
+
                             else:
                                 response.raise_for_status()
                         

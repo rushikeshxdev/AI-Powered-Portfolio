@@ -25,7 +25,9 @@ config = context.config
 # Override sqlalchemy.url with environment variable if present
 database_url = os.getenv("DATABASE_URL")
 if database_url:
-    config.set_main_option("sqlalchemy.url", database_url)
+    # Escape percent signs for ConfigParser (Alembic uses ConfigParser which requires %% for literal %)
+    database_url_escaped = database_url.replace("%", "%%")
+    config.set_main_option("sqlalchemy.url", database_url_escaped)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
