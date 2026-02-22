@@ -78,7 +78,7 @@ async def lifespan(app: FastAPI):
     logger.info("Application startup: Initializing RAG system")
     try:
         result = await initialize_rag_system(
-            resume_path="backend/data/resume.json",
+            resume_path="data/resume.json",
             persist_directory="/app/chroma_data",
             force_reinit=False  # Only initialize if not already done
         )
