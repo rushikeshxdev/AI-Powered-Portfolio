@@ -1,0 +1,13 @@
+Generic single-database configuration with async support for SQLAlchemy.
+
+To create a new migration:
+    alembic revision --autogenerate -m "description of changes"
+
+To apply migrations:
+    alembic upgrade head
+
+To downgrade:
+    alembic downgrade -1
+
+To view migration history:
+    alembic history
