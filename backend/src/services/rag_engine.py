@@ -1,10 +1,12 @@
 """RAG Engine for orchestrating the complete RAG pipeline."""
 
+import asyncio
 import logging
-from typing import AsyncGenerator, List, Tuple
+from typing import AsyncGenerator, List, Tuple, Optional
 
 from .embedding_service import EmbeddingService
 from .openrouter_client import OpenRouterClient
+from .groq_client import GroqClient
 from .vector_store import VectorStore
 
 logger = logging.getLogger(__name__)
@@ -24,7 +26,8 @@ class RAGEngine:
         self,
         embedding_service: EmbeddingService,
         vector_store: VectorStore,
-        openrouter_client: OpenRouterClient
+        openrouter_client: OpenRouterClient,
+        groq_client: Optional[GroqClient] = None
     ):
         """Initialize RAG Engine with required services.
         
@@ -32,10 +35,12 @@ class RAGEngine:
             embedding_service: Service for generating embeddings.
             vector_store: Vector store for similarity search.
             openrouter_client: Client for OpenRouter API.
+            groq_client: Optional client for Groq API (fallback).
         """
         self.embedding_service = embedding_service
         self.vector_store = vector_store
         self.openrouter_client = openrouter_client
+        self.groq_client = groq_client
         
         logger.info("RAGEngine initialized successfully")
 
@@ -131,14 +136,44 @@ Question: {question}"""
             prompt = self._construct_prompt(question, context_chunks)
             logger.debug(f"Prompt length: {len(prompt)} characters")
             
-            # Step 4: Stream LLM response
+            # Step 4: Stream LLM response with fallback
             logger.info("Streaming response from OpenRouter...")
             token_count = 0
-            async for token in self.openrouter_client.stream_completion(prompt):
-                token_count += 1
-                yield token
+            provider_used = "openrouter"
             
-            logger.info(f"Completed streaming response ({token_count} tokens)")
+            try:
+                # Try OpenRouter first with 5-second timeout
+                async def stream_with_timeout():
+                    async for token in self.openrouter_client.stream_completion(prompt):
+                        yield token
+                
+                async for token in asyncio.wait_for(stream_with_timeout(), timeout=5.0):
+                    token_count += 1
+                    yield token
+                
+                logger.info(f"Completed streaming response from OpenRouter ({token_count} tokens)")
+            
+            except (asyncio.TimeoutError, Exception) as e:
+                # OpenRouter failed - fallback to Groq immediately
+                error_type = "timeout" if isinstance(e, asyncio.TimeoutError) else "error"
+                logger.warning(f"OpenRouter {error_type}: {e}. Falling back to Groq...")
+                
+                if self.groq_client:
+                    provider_used = "groq"
+                    logger.info("Using Groq as fallback provider")
+                    
+                    try:
+                        async for token in self.groq_client.stream_completion(prompt):
+                            token_count += 1
+                            yield token
+                        
+                        logger.info(f"Completed streaming response from Groq ({token_count} tokens)")
+                    except Exception as groq_error:
+                        logger.error(f"Groq fallback also failed: {groq_error}", exc_info=True)
+                        raise
+                else:
+                    logger.error("No fallback provider available")
+                    raise
         
         except ValueError as e:
             logger.error(f"Validation error in RAG pipeline: {e}")
