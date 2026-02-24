@@ -105,16 +105,27 @@ async def lifespan(app: FastAPI):
     from src.services.embedding_service import EmbeddingService
     from src.services.vector_store import VectorStore
     from src.services.openrouter_client import OpenRouterClient
+    from src.services.groq_client import GroqClient
     from src.services.rag_engine import RAGEngine
     
     try:
         app.state.embedding_service = EmbeddingService()
         app.state.vector_store = VectorStore(persist_directory="/app/chroma_data")
         app.state.openrouter_client = OpenRouterClient()
+        
+        # Initialize Groq client as fallback (if API key is available)
+        try:
+            app.state.groq_client = GroqClient()
+            logger.info("Groq client initialized as fallback provider")
+        except ValueError as e:
+            logger.warning(f"Groq client not initialized: {e}. No fallback available.")
+            app.state.groq_client = None
+        
         app.state.rag_engine = RAGEngine(
             embedding_service=app.state.embedding_service,
             vector_store=app.state.vector_store,
-            openrouter_client=app.state.openrouter_client
+            openrouter_client=app.state.openrouter_client,
+            groq_client=app.state.groq_client
         )
         logger.info("Services initialized successfully")
     except Exception as e:

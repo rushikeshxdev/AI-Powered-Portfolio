@@ -18,6 +18,7 @@ chromadb==0.4.22
 
 # HTTP client for OpenRouter
 httpx==0.26.0
+groq==0.4.2
 
 # Rate limiting
 slowapi==0.1.9
@@ -30,6 +31,7 @@ pytest==7.4.4
 pytest-asyncio==0.23.3
 pytest-cov==4.1.0
 httpx==0.26.0
+aiosqlite==0.19.0
 
 # Code quality
 black==24.1.1

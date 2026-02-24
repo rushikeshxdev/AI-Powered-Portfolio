@@ -5,8 +5,9 @@ This module defines the application configuration loaded from environment variab
 All sensitive data (API keys, database URLs, secret keys) are loaded from .env file.
 """
 
-from typing import List
-from pydantic import Field
+import json
+from typing import List, Union
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -27,12 +28,17 @@ class Settings(BaseSettings):
         description="OpenRouter API key for LLM access"
     )
     
+    groq_api_key: str = Field(
+        default="",
+        description="Groq API key for LLM fallback"
+    )
+    
     database_url: str = Field(
         ...,
         description="PostgreSQL database connection URL"
     )
     
-    allowed_origins: List[str] = Field(
+    allowed_origins: Union[List[str], str] = Field(
         default=["http://localhost:5173"],
         description="Allowed CORS origins for API access"
     )
@@ -46,6 +52,24 @@ class Settings(BaseSettings):
         default="development",
         description="Application environment (development, production, etc.)"
     )
+    
+    @field_validator("allowed_origins", mode="before")
+    @classmethod
+    def parse_allowed_origins(cls, v) -> List[str]:
+        """Parse ALLOWED_ORIGINS from JSON string or comma-separated list."""
+        if isinstance(v, list):
+            return v
+        if isinstance(v, str):
+            # Try to parse as JSON first
+            try:
+                parsed = json.loads(v)
+                if isinstance(parsed, list):
+                    return parsed
+            except json.JSONDecodeError:
+                pass
+            # Fall back to comma-separated parsing
+            return [origin.strip() for origin in v.split(",")]
+        return v
     
     model_config = SettingsConfigDict(
         env_file=".env",
