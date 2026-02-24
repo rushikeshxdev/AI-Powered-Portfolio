@@ -28,65 +28,66 @@ backend/
 
 ## Setup Instructions
 
-### 1. Create Virtual Environment
+### Quick Setup (Recommended)
+
+Run the automated setup script:
 
 ```bash
-# Navigate to backend directory
 cd backend
-
-# Create virtual environment
-python3.11 -m venv venv
-
-# Activate virtual environment
-# On Linux/Mac:
-source venv/bin/activate
-# On Windows:
-venv\Scripts\activate
+python setup_backend.py
 ```
 
-### 2. Install Dependencies
+The script will:
+- ✓ Check Python version (3.8+ required)
+- ✓ Create virtual environment
+- ✓ Install all dependencies
+- ✓ Run health checks
+- ✓ Provide next steps
 
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt
-```
+**For detailed instructions, see [SETUP_GUIDE.md](SETUP_GUIDE.md)**
 
-### 3. Configure Environment Variables
+**For quick reference, see [QUICK_START.md](QUICK_START.md)**
 
-```bash
-# Copy example environment file
-cp .env.example .env
+### Manual Setup
 
-# Edit .env file with your configuration
-# - Set DATABASE_URL to your PostgreSQL connection string
-# - Set OPENROUTER_API_KEY from https://openrouter.ai/
-# - Update ALLOWED_ORIGINS with your frontend URL
-# - Generate SECRET_KEY using: openssl rand -hex 32
-```
+If you prefer manual setup:
 
-### 4. Run the Application
+1. **Create virtual environment:**
+   ```bash
+   python -m venv venv
+   ```
+
+2. **Activate virtual environment:**
+   - Windows PowerShell: `.\venv\Scripts\Activate.ps1`
+   - Windows CMD: `venv\Scripts\activate.bat`
+   - macOS/Linux: `source venv/bin/activate`
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configure environment:**
+   ```bash
+   cp .env.example .env
+   # Edit .env with your settings
+   ```
+
+5. **Run health check:**
+   ```bash
+   python check_backend.py
+   ```
+
+### Running the Application
 
 ```bash
 # Development mode with auto-reload
-uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
+uvicorn src.main:app --reload
 
-# Or run directly
-python src/main.py
-```
-
-The API will be available at:
-- API: http://localhost:8000
-- Interactive docs: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
-
-### 5. Verify Installation
-
-```bash
-# Check health endpoint
-curl http://localhost:8000/api/health
-
-# Expected response (when all services are healthy):
-# {"status":"healthy","timestamp":"2024-01-01T00:00:00Z","services":{"database":true,"vector_store":true}}
+# The API will be available at:
+# - API: http://localhost:8000
+# - Interactive docs: http://localhost:8000/docs
+# - ReDoc: http://localhost:8000/redoc
 ```
 
 ## API Endpoints
@@ -139,6 +140,14 @@ mypy src/
 | `ALLOWED_ORIGINS` | Comma-separated CORS origins | Yes | localhost:5173 |
 | `SECRET_KEY` | Secret key for security | Yes | - |
 | `ENVIRONMENT` | Environment (development/production) | No | development |
+
+## Documentation
+
+- **[SETUP_GUIDE.md](SETUP_GUIDE.md)** - Comprehensive setup instructions with troubleshooting
+- **[QUICK_START.md](QUICK_START.md)** - Quick reference for common commands
+- **[DATABASE.md](DATABASE.md)** - Database setup and migrations
+- **[INITIALIZATION_GUIDE.md](INITIALIZATION_GUIDE.md)** - RAG system initialization
+- **[ENDPOINT_TESTING.md](ENDPOINT_TESTING.md)** - API endpoint testing guide
 
 ## Next Steps
 
