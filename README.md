@@ -690,33 +690,20 @@ It helps others discover the project and motivates me to keep improving it.
 
 ---
 
-## 🗺️ Roadmap
+## 🚀 Upcoming Features
 
-### ✅ Completed
-- [x] Project setup and structure
-- [x] Backend API foundation
-- [x] Database models and migrations
-- [x] RAG system architecture
-- [x] Vector store integration
-- [x] Frontend React setup
+Exciting enhancements planned for future releases:
 
-### 🚧 In Progress
-- [ ] Chat API endpoints
-- [ ] Frontend chat interface
-- [ ] Streaming response implementation
-- [ ] Session management
-
-### 📋 Planned Features
-- [ ] User authentication (optional)
-- [ ] Chat history persistence
-- [ ] Multi-language support
-- [ ] Voice input/output
-- [ ] Analytics dashboard
-- [ ] A/B testing for prompts
-- [ ] Feedback collection system
-- [ ] Export chat conversations
-- [ ] Dark/Light theme toggle
-- [ ] Mobile app (React Native)
+- **User Authentication** - Optional login system for personalized experiences
+- **Enhanced Chat History** - Persistent chat sessions with search and export
+- **Multi-language Support** - Internationalization for global reach
+- **Voice Interaction** - Voice input and text-to-speech responses
+- **Analytics Dashboard** - Insights into chat usage and popular questions
+- **Dark/Light Theme** - User-preferred color scheme toggle
+- **Mobile App** - React Native version for iOS and Android
+- **Advanced RAG** - Improved context retrieval with re-ranking
+- **Feedback System** - User ratings and feedback collection
+- **A/B Testing** - Experiment with different prompts and models
 
 ---
 
