@@ -113,9 +113,9 @@ class VectorStore:
                 )
                 logger.info(f"Created new collection: {self.collection_name}")
             
-            # Prepare metadata (use empty dicts if not provided)
+            # Prepare metadata (ChromaDB requires non-empty metadata)
             if metadatas is None:
-                metadatas = [{} for _ in texts]
+                metadatas = [{"index": i} for i, _ in enumerate(texts)]
             
             # Generate IDs for documents
             ids = [f"doc_{i}" for i in range(len(texts))]
