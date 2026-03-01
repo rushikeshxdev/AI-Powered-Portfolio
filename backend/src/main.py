@@ -79,11 +79,10 @@ async def lifespan(app: FastAPI):
     # Startup: Initialize RAG system
     logger.info("Application startup: Initializing RAG system")
     try:
-    # Skip heavy model loading on Render to avoid startup timeout
-    # Model will be loaded on first request
-    logger.info("Skipping model download during startup to meet Render's timeout")
-    result = {"success": True, "message": "Skipped during startup"}
-
+        # Skip heavy model loading on Render to avoid startup timeout
+        # Model will be loaded on first request
+        logger.info("Skipping model download during startup to meet Render's timeout")
+        result = {"success": True, "message": "Skipped during startup"}
         
         if result["success"]:
             logger.info(
@@ -137,7 +136,6 @@ async def lifespan(app: FastAPI):
     
     # Shutdown: Cleanup if needed
     logger.info("Application shutdown")
-
 
 # Initialize FastAPI app with lifespan
 app = FastAPI(
