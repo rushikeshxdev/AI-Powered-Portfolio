@@ -3,7 +3,7 @@
 import json
 import logging
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Tuple, Optional
 
 from sentence_transformers import SentenceTransformer
 
@@ -16,21 +16,37 @@ class EmbeddingService:
     This service uses the all-MiniLM-L6-v2 model to generate 384-dimensional
     embeddings for text chunks. It handles resume chunking and embedding
     generation for the RAG system.
+    
+    The model is loaded lazily on first use to avoid blocking application startup.
     """
 
     def __init__(self, model_name: str = "all-MiniLM-L6-v2"):
-        """Initialize the embedding service with a Sentence Transformer model.
+        """Initialize the embedding service (model loaded lazily on first use).
         
         Args:
             model_name: Name of the Sentence Transformer model to use.
                        Defaults to "all-MiniLM-L6-v2" which produces 384-dimensional vectors.
+        """
+        self.model_name = model_name
+        self.model: Optional[SentenceTransformer] = None
+        self.embedding_dimension: Optional[int] = None
+        logger.info(f"EmbeddingService initialized (model will load on first use)")
+
+    def _ensure_model_loaded(self) -> None:
+        """Load the Sentence Transformer model if not already loaded.
+        
+        This method is called automatically before any operation that needs the model.
+        The model is downloaded and loaded only once, on first use.
         
         Raises:
             Exception: If model fails to load.
         """
+        if self.model is not None:
+            return  # Model already loaded
+        
         try:
-            logger.info(f"Loading Sentence Transformer model: {model_name}")
-            self.model = SentenceTransformer(model_name)
+            logger.info(f"Loading Sentence Transformer model: {self.model_name}")
+            self.model = SentenceTransformer(self.model_name)
             self.embedding_dimension = self.model.get_sentence_embedding_dimension()
             logger.info(
                 f"Model loaded successfully. Embedding dimension: {self.embedding_dimension}"
@@ -54,6 +70,9 @@ class EmbeddingService:
         """
         if not text or not text.strip():
             raise ValueError("Text cannot be empty")
+
+        # Ensure model is loaded before use
+        self._ensure_model_loaded()
 
         try:
             # Generate embedding and convert to list

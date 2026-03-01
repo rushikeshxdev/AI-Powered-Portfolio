@@ -79,11 +79,11 @@ async def lifespan(app: FastAPI):
     # Startup: Initialize RAG system
     logger.info("Application startup: Initializing RAG system")
     try:
-        result = await initialize_rag_system(
-            resume_path="backend/data/resume.json",
-            persist_directory="/tmp/chroma_data",
-            force_reinit=False  # Only initialize if not already done
-        )
+    # Skip heavy model loading on Render to avoid startup timeout
+    # Model will be loaded on first request
+    logger.info("Skipping model download during startup to meet Render's timeout")
+    result = {"success": True, "message": "Skipped during startup"}
+
         
         if result["success"]:
             logger.info(
