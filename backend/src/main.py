@@ -29,7 +29,7 @@ from src.schemas import ChatRequest, StreamToken, ChatHistoryResponse, ChatMessa
 from src.services.initialize_rag import initialize_rag_system
 from src.middleware.security_headers import SecurityHeadersMiddleware
 from src.middleware.request_id import RequestIDMiddleware
-from src.config import settings
+from src.logging_config import setup_logging
 
 # Configure structured logging with JSON format and rotating file handler
 setup_logging(
