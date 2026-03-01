@@ -18,7 +18,7 @@ pydantic-settings==2.5.0  # Updated to match pydantic version
 # AI/ML and embeddings
 sentence-transformers==2.3.1
 chromadb==0.4.22
-numpy<2.0.0  # Pin to 1.x for ChromaDB compatibility
+numpy==1.26.4  # Pin to specific 1.x version for ChromaDB compatibility
 
 # HTTP client for OpenRouter
 httpx==0.26.0
