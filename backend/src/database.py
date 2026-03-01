@@ -9,9 +9,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Database URL from environment variable
+# Check DATABASE_CONNECTION_URL first (for Render), then DATABASE_URL
 DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql+asyncpg://localhost/ai_portfolio"
+    "DATABASE_CONNECTION_URL",
+    os.getenv("DATABASE_URL", "postgresql+asyncpg://localhost/ai_portfolio")
 )
 
 # Create async engine
