@@ -81,7 +81,7 @@ async def lifespan(app: FastAPI):
     try:
         result = await initialize_rag_system(
             resume_path="backend/data/resume.json",
-            persist_directory="/app/chroma_data",
+            persist_directory="/tmp/chroma_data",
             force_reinit=False  # Only initialize if not already done
         )
         
@@ -112,7 +112,7 @@ async def lifespan(app: FastAPI):
     
     try:
         app.state.embedding_service = EmbeddingService()
-        app.state.vector_store = VectorStore(persist_directory="/app/chroma_data")
+        app.state.vector_store = VectorStore(persist_directory="/tmp/chroma_data")
         app.state.openrouter_client = OpenRouterClient()
         
         # Initialize Groq client as fallback (if API key is available)
