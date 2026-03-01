@@ -29,7 +29,7 @@ from src.schemas import ChatRequest, StreamToken, ChatHistoryResponse, ChatMessa
 from src.services.initialize_rag import initialize_rag_system
 from src.middleware.security_headers import SecurityHeadersMiddleware
 from src.middleware.request_id import RequestIDMiddleware
-from src.logging_config import setup_logging
+from src.config import settings
 
 # Configure structured logging with JSON format and rotating file handler
 setup_logging(
@@ -78,7 +78,7 @@ async def lifespan(app: FastAPI):
     logger.info("Application startup: Initializing RAG system")
     try:
         result = await initialize_rag_system(
-            resume_path="data/resume.json",
+            resume_path="backend/data/resume.json",
             persist_directory="/app/chroma_data",
             force_reinit=False  # Only initialize if not already done
         )
@@ -264,19 +264,14 @@ app.add_middleware(RequestIDMiddleware)
 
 # Configure CORS middleware
 # TODO: Update allowed_origins with actual frontend URL in production
+# Configure CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",  # Vite dev server
-        "http://localhost:3000",  # Alternative dev port
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=settings.allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # Configure security headers middleware
 # Adds X-Content-Type-Options, X-Frame-Options, X-XSS-Protection,
 # Strict-Transport-Security, and Content-Security-Policy headers
