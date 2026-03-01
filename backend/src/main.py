@@ -280,12 +280,15 @@ app.add_middleware(SecurityHeadersMiddleware)
 # Configure trusted host middleware
 # Restricts which Host headers are allowed to prevent host header injection attacks
 # In production, this should be configured with actual domain names
+# Update backend/src/main.py around line 283-290
+
 app.add_middleware(
     TrustedHostMiddleware,
     allowed_hosts=[
         "localhost",
         "127.0.0.1",
-        "*.railway.app",  # Railway deployment domain
+        "*.railway.app",  # Railway deployment domain (legacy)
+        "*.onrender.com",  # Render deployment domain
         "*.vercel.app",   # If backend is accessed through Vercel
     ]
 )
