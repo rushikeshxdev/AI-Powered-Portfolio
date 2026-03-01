@@ -67,42 +67,20 @@ def get_client_ip_for_limiter(request: Request) -> str:
 # Initialize rate limiter
 limiter = Limiter(key_func=get_client_ip_for_limiter)
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """Lifespan context manager for FastAPI startup and shutdown events.
+def ensure_services_initialized(app: FastAPI) -> None:
+    """Lazy initialization of services on first request.
     
-    This function runs on application startup to initialize the RAG system
-    by loading resume data, chunking it, generating embeddings, and storing
-    them in the vector store. It also initializes services and stores them
-    in app.state for reuse across requests.
+    This function initializes all RAG services (embedding, vector store, LLM clients)
+    only when first needed, avoiding startup timeout on Render.
+    
+    The first chat request will take 10-15 seconds while services load,
+    but subsequent requests will be fast.
     """
-    # Startup: Initialize RAG system
-    logger.info("Application startup: Initializing RAG system")
-    try:
-        # Skip heavy model loading on Render to avoid startup timeout
-        # Model will be loaded on first request
-        logger.info("Skipping model download during startup to meet Render's timeout")
-        result = {"success": True, "message": "Skipped during startup"}
-        
-        if result["success"]:
-            logger.info(
-                f"RAG system initialized successfully: {result['message']}"
-            )
-            if result.get("chunks_processed", 0) > 0:
-                logger.info(
-                    f"Processed {result['chunks_processed']} chunks, "
-                    f"generated {result['embeddings_generated']} embeddings"
-                )
-        else:
-            logger.error(f"RAG system initialization failed: {result['message']}")
-            # Don't prevent app startup, but log the error
-            
-    except Exception as e:
-        logger.error(f"Error during RAG initialization: {e}", exc_info=True)
-        # Don't prevent app startup even if RAG init fails
+    if hasattr(app.state, "rag_engine"):
+        return  # Already initialized
     
-    # Initialize services and store in app.state
-    logger.info("Initializing services...")
+    logger.info("Lazy-loading services on first request...")
+    
     from src.services.embedding_service import EmbeddingService
     from src.services.vector_store import VectorStore
     from src.services.openrouter_client import OpenRouterClient
@@ -128,13 +106,23 @@ async def lifespan(app: FastAPI):
             openrouter_client=app.state.openrouter_client,
             groq_client=app.state.groq_client
         )
-        logger.info("Services initialized successfully")
+        logger.info("Services lazy-loaded successfully")
     except Exception as e:
-        logger.error(f"Error initializing services: {e}", exc_info=True)
+        logger.error(f"Error lazy-loading services: {e}", exc_info=True)
+        raise
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan context manager for FastAPI startup and shutdown events.
     
+    Services are NOT initialized here to avoid startup timeout on Render.
+    They will be lazy-loaded on first chat request via ensure_services_initialized().
+    
+    This allows the app to start quickly and open a port within Render's 5-minute timeout.
+    """
+    logger.info("Application startup - services will be lazy-loaded on first request")
     yield
-    
-    # Shutdown: Cleanup if needed
     logger.info("Application shutdown")
 
 # Initialize FastAPI app with lifespan
@@ -607,8 +595,22 @@ async def chat_endpoint(
         HTTPException: If RAG engine is not initialized (503)
         RateLimitExceeded: If rate limit is exceeded (10 requests per minute)
     """
-    # Get request_id from request state
+        # Get request_id from request state
     request_id = getattr(request.state, "request_id", "unknown")
+    
+    # Lazy-load services on first request
+    try:
+        ensure_services_initialized(request.app)
+    except Exception as e:
+        logger.error(
+            f"Failed to initialize services: {e}",
+            exc_info=True,
+            extra={"request_id": request_id}
+        )
+        raise HTTPException(
+            status_code=503,
+            detail="AI service initialization failed. Please try again later."
+        )
     
     # Check if RAG engine is initialized
     if not hasattr(request.app.state, "rag_engine"):
