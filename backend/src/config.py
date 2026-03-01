@@ -24,9 +24,10 @@ class Settings(BaseSettings):
     """
     
     openrouter_api_key: str = Field(
-        ...,
+        default="",
         description="OpenRouter API key for LLM access"
     )
+
     
     groq_api_key: str = Field(
         default="",
@@ -34,7 +35,7 @@ class Settings(BaseSettings):
     )
     
     database_url: str = Field(
-        ...,
+        default="postgresql+asyncpg://localhost/ai_portfolio",
         description="PostgreSQL database connection URL"
     )
     
@@ -44,9 +45,10 @@ class Settings(BaseSettings):
     )
     
     secret_key: str = Field(
-        ...,
+        default="default-secret-key-change-in-production",
         description="Secret key for security operations"
     )
+
     
     environment: str = Field(
         default="development",
