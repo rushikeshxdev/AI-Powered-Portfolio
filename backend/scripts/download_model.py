@@ -1,5 +1,5 @@
-# Update download script
-cat > backend/scripts/download_model.py << 'EOF'
+# First, remove the corrupted file and create the correct one
+cat > backend/scripts/download_model.py << 'ENDOFFILE'
 """Pre-download Sentence Transformer model during build.
 
 This script downloads the Sentence Transformer model during the Render build phase
@@ -64,6 +64,4 @@ def download_model():
 
 if __name__ == "__main__":
     sys.exit(download_model())
-EOF
-
-# Update embedding service to use same cache
+ENDOFFILE
