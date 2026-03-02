@@ -1,3 +1,5 @@
+# Update download script
+cat > backend/scripts/download_model.py << 'EOF'
 """Pre-download Sentence Transformer model during build.
 
 This script downloads the Sentence Transformer model during the Render build phase
@@ -23,6 +25,13 @@ def download_model():
     print()
     
     try:
+        # Set cache directory to persist from build to runtime
+        cache_dir = os.path.join(os.getcwd(), '.cache')
+        os.environ['SENTENCE_TRANSFORMERS_HOME'] = cache_dir
+        os.environ['TRANSFORMERS_CACHE'] = cache_dir
+        
+        print(f"Cache directory: {cache_dir}")
+        
         from sentence_transformers import SentenceTransformer
         
         model_name = "all-MiniLM-L6-v2"
@@ -31,7 +40,7 @@ def download_model():
         print()
         
         # Download and cache the model
-        model = SentenceTransformer(model_name)
+        model = SentenceTransformer(model_name, cache_folder=cache_dir)
         
         # Verify it works
         test_embedding = model.encode("test", convert_to_numpy=True)
@@ -40,6 +49,7 @@ def download_model():
         print()
         print("✓ Model downloaded and cached successfully!")
         print(f"✓ Embedding dimension: {embedding_dim}")
+        print(f"✓ Cache location: {cache_dir}")
         print(f"✓ Model will now load instantly on first request")
         print()
         
@@ -54,3 +64,6 @@ def download_model():
 
 if __name__ == "__main__":
     sys.exit(download_model())
+EOF
+
+# Update embedding service to use same cache
