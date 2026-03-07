@@ -113,6 +113,8 @@
         "Monaco Editor",
         "Piston API"
       ],
+      "github": "https://github.com/rushikeshxdev/HireeFlow.ai",
+      "demo": "https://hiree-flow-ai.vercel.app/",
       "highlights": [
         "Real-Time Communication: Built a low-latency video and audio system using WebRTC and simple-peer",
         "Collaborative Environment: Integrated Monaco Editor with Socket.io for simultaneous code editing across 8+ languages",
@@ -125,6 +127,36 @@
         "Real-time collaboration",
         "Generative AI",
         "Full-stack development"
+      ]
+    },
+    {
+      "name": "Rayeva AI Dashboard",
+      "subtitle": "Sustainable Products Platform with AI Modules",
+      "description": "Developed a full-stack AI-powered dashboard for Rayeva, a sustainable products company. Built 4 core modules: Product Tagger (AI categorization), B2B Proposal Generator (bulk purchase recommendations), Environmental Impact Report (carbon/plastic tracking), and WhatsApp Bot integration. Redesigned the entire frontend with a modern light teal theme using React and CSS variables.",
+      "technologies": [
+        "React.js",
+        "Python",
+        "FastAPI",
+        "SQLite",
+        "Google Gemini API",
+        "Groq API",
+        "CSS Variables"
+      ],
+      "github": "https://github.com/rushikeshxdev/rayeva-ai-modules",
+      "demo": "https://rayeva-ai-modules.vercel.app/",
+      "highlights": [
+        "AI Modules: Built 4 production-ready modules including Product Tagger, B2B Proposal Generator, Environmental Impact Report, and WhatsApp Bot integration",
+        "AI Fallback System: Implemented automatic failover between Google Gemini and Groq APIs for reliable content generation",
+        "Frontend Redesign: Created modern light teal theme using React and CSS variables for consistent branding",
+        "Sustainability Focus: Developed carbon footprint and plastic waste tracking system for environmental impact reporting"
+      ],
+      "skills_demonstrated": [
+        "React.js",
+        "Python",
+        "FastAPI",
+        "Artificial Intelligence (AI)",
+        "Full-Stack Development",
+        "API Integration"
       ]
     },
     {
@@ -141,6 +173,7 @@
         "Server-Sent Events"
       ],
       "github": "https://github.com/rushikeshxdev/dev-translator",
+      "demo": "https://github.com/rushikeshxdev/dev-translator",
       "highlights": [
         "Browser Engineering: Developed using Plasmo framework and Manifest V3",
         "Streaming AI Responses: Implemented Server-Sent Events (SSE) to stream translation tokens, reducing perceived latency to under 200ms",
@@ -169,7 +202,8 @@
         "JWT",
         "Bcrypt"
       ],
-      "demo": "Store Rating Platform",
+      "github": "https://github.com/rushikeshxdev/store-rating-platform",
+      "demo": "https://store-rating-platform-ruddy.vercel.app/",
       "highlights": [
         "Role-Based Access Control (RBAC): Architected strict permission system for Admin, Store Owner, and User roles",
         "Advanced Security: Implemented JWT authentication with HttpOnly cookies, Bcrypt password hashing (12 salt rounds), SQL injection protection",
@@ -198,6 +232,7 @@
         "JWT"
       ],
       "github": "https://github.com/rushikeshxdev/fintrak",
+      "demo": "https://hiree-flow-ai.vercel.app/",
       "highlights": [
         "Database Performance: Implemented Compound Indexing in MongoDB (sorting by UserID + Date), reducing query execution time by ~40%",
         "Data Visualization: Integrated Chart.js with Redux Toolkit for real-time interactive financial insights",
@@ -213,33 +248,6 @@
       ]
     },
     {
-      "name": "Gmail to Google Sheets Automation",
-      "subtitle": "Automated Workflow Integration",
-      "description": "Designed and deployed a Python automation bot to streamline data entry workflows by syncing email data to spreadsheets. Implemented secure authentication using OAuth 2.0 via Google Cloud Console. Engineered state-persistence mechanism using atomic file operations (JSON) to track processed email IDs and prevent duplicates. Utilized BeautifulSoup to parse complex HTML email bodies. Achieved 100% success rate in processing 300+ emails during stress testing.",
-      "technologies": [
-        "Python",
-        "Google Gmail API",
-        "Google Sheets API",
-        "OAuth 2.0",
-        "BeautifulSoup",
-        "JSON"
-      ],
-      "github": "https://github.com/rushikeshxdev/gmail-to-sheets-automation",
-      "highlights": [
-        "OAuth 2.0 Security: Implemented secure authentication using Google Cloud Console",
-        "Duplicate Prevention: Engineered state-persistence mechanism using atomic file operations (JSON) to track processed email IDs",
-        "Data Parsing: Utilized BeautifulSoup to parse complex HTML email bodies",
-        "Reliability: Achieved 100% success rate in processing 300+ emails during stress testing"
-      ],
-      "skills_demonstrated": [
-        "Python",
-        "Workflow Automation",
-        "API Integration",
-        "OAuth 2.0",
-        "Data parsing"
-      ]
-    },
-    {
       "name": "InternVerse - Smart Internship Portal",
       "subtitle": "MERN Stack Internship Management System",
       "description": "Full-stack role-based web application that streamlines the entire internship lifecycle from application to certificate generation. Features separate portals for Interns and Admins with complete CRUD operations, automated workflows, and real-time status tracking.",
@@ -252,6 +260,7 @@
         "Tailwind CSS"
       ],
       "github": "https://github.com/rushikeshxdev/InternVerse",
+      "demo": "https://github.com/rushikeshxdev/InternVerse",
       "highlights": [
         "Role-Based Access Control (RBAC) with separate portals for Interns and Admins",
         "RESTful API Design with clean, scalable architecture",
@@ -264,30 +273,6 @@
         "RESTful APIs",
         "Workflow Automation",
         "JWT Authentication"
-      ]
-    },
-    {
-      "name": "Airbnb Sales Analysis",
-      "subtitle": "Power BI Data Analytics Dashboard",
-      "description": "Comprehensive Power BI project analyzing Airbnb sales data to provide insights into sales performance, trends, and key metrics. Built with interactive visualizations and data modeling for business intelligence.",
-      "technologies": [
-        "Power BI",
-        "Data Analysis",
-        "CSV Processing",
-        "DAX"
-      ],
-      "github": "https://github.com/rushikeshxdev/Airbnb-Sales-Analysis",
-      "highlights": [
-        "Interactive Power BI dashboard with real-time insights",
-        "Data modeling and transformation using Power Query",
-        "Sales performance metrics and trend analysis",
-        "Version-controlled using Power BI Project format (.pbip)"
-      ],
-      "skills_demonstrated": [
-        "Power BI",
-        "Data Analysis",
-        "Business Intelligence",
-        "Data Visualization"
       ]
     },
     {
@@ -304,6 +289,7 @@
         "Recharts"
       ],
       "github": "https://github.com/rushikeshxdev/sales-voice-ai-sentiment",
+      "demo": "https://github.com/rushikeshxdev/sales-voice-ai-sentiment",
       "highlights": [
         "Real-time sentiment scoring with emotion detection (9 emotional states)",
         "Live dashboard with WebSocket-based updates (< 100ms latency)",
@@ -317,6 +303,59 @@
         "NLP",
         "Sentiment Analysis",
         "WebSocket"
+      ]
+    },
+    {
+      "name": "Gmail to Google Sheets Automation",
+      "subtitle": "Automated Workflow Integration",
+      "description": "Designed and deployed a Python automation bot to streamline data entry workflows by syncing email data to spreadsheets. Implemented secure authentication using OAuth 2.0 via Google Cloud Console. Engineered state-persistence mechanism using atomic file operations (JSON) to track processed email IDs and prevent duplicates. Utilized BeautifulSoup to parse complex HTML email bodies. Achieved 100% success rate in processing 300+ emails during stress testing.",
+      "technologies": [
+        "Python",
+        "Google Gmail API",
+        "Google Sheets API",
+        "OAuth 2.0",
+        "BeautifulSoup",
+        "JSON"
+      ],
+      "github": "https://github.com/rushikeshxdev/gmail-to-sheets-automation",
+      "demo": "https://github.com/rushikeshxdev/gmail-to-sheets-automation",
+      "highlights": [
+        "OAuth 2.0 Security: Implemented secure authentication using Google Cloud Console",
+        "Duplicate Prevention: Engineered state-persistence mechanism using atomic file operations (JSON) to track processed email IDs",
+        "Data Parsing: Utilized BeautifulSoup to parse complex HTML email bodies",
+        "Reliability: Achieved 100% success rate in processing 300+ emails during stress testing"
+      ],
+      "skills_demonstrated": [
+        "Python",
+        "Workflow Automation",
+        "API Integration",
+        "OAuth 2.0",
+        "Data parsing"
+      ]
+    },
+    {
+      "name": "Airbnb Sales Analysis",
+      "subtitle": "Power BI Data Analytics Dashboard",
+      "description": "Comprehensive Power BI project analyzing Airbnb sales data to provide insights into sales performance, trends, and key metrics. Built with interactive visualizations and data modeling for business intelligence.",
+      "technologies": [
+        "Power BI",
+        "Data Analysis",
+        "CSV Processing",
+        "DAX"
+      ],
+      "github": "https://github.com/rushikeshxdev/Airbnb-Sales-Analysis",
+      "demo": "https://github.com/rushikeshxdev/Airbnb-Sales-Analysis",
+      "highlights": [
+        "Interactive Power BI dashboard with real-time insights",
+        "Data modeling and transformation using Power Query",
+        "Sales performance metrics and trend analysis",
+        "Version-controlled using Power BI Project format (.pbip)"
+      ],
+      "skills_demonstrated": [
+        "Power BI",
+        "Data Analysis",
+        "Business Intelligence",
+        "Data Visualization"
       ]
     }
   ]
