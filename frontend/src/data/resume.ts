@@ -100,7 +100,7 @@ export const resumeData: ResumeData = {
       "Sentence Transformers"
     ]
   },
-  "projects": [
+    "projects": [
     {
       "name": "HireeFlow.ai",
       "subtitle": "Real-Time Interview Platform with AI Copilot",
@@ -116,6 +116,7 @@ export const resumeData: ResumeData = {
         "Piston API"
       ],
       "github": "https://github.com/rushikeshxdev/HireeFlow.ai",
+      "demo": "https://hiree-flow-ai.vercel.app/",
       "highlights": [
         "Real-Time Communication: Built a low-latency video and audio system using WebRTC and simple-peer",
         "Collaborative Environment: Integrated Monaco Editor with Socket.io for simultaneous code editing across 8+ languages",
@@ -128,6 +129,36 @@ export const resumeData: ResumeData = {
         "Real-time collaboration",
         "Generative AI",
         "Full-stack development"
+      ]
+    },
+    {
+      "name": "Rayeva AI Dashboard",
+      "subtitle": "Sustainable Products Platform with AI Modules",
+      "description": "Developed a full-stack AI-powered dashboard for Rayeva, a sustainable products company. Built 4 core modules: Product Tagger (AI categorization), B2B Proposal Generator (bulk purchase recommendations), Environmental Impact Report (carbon/plastic tracking), and WhatsApp Bot integration. Redesigned the entire frontend with a modern light teal theme using React and CSS variables.",
+      "technologies": [
+        "React.js",
+        "Python",
+        "FastAPI",
+        "SQLite",
+        "Google Gemini API",
+        "Groq API",
+        "CSS Variables"
+      ],
+      "github": "https://github.com/rushikeshxdev/rayeva-ai-modules",
+      "demo": "https://rayeva-ai-modules.vercel.app/",
+      "highlights": [
+        "AI Modules: Built 4 production-ready modules including Product Tagger, B2B Proposal Generator, Environmental Impact Report, and WhatsApp Bot integration",
+        "AI Fallback System: Implemented automatic failover between Google Gemini and Groq APIs for reliable content generation",
+        "Frontend Redesign: Created modern light teal theme using React and CSS variables for consistent branding",
+        "Sustainability Focus: Developed carbon footprint and plastic waste tracking system for environmental impact reporting"
+      ],
+      "skills_demonstrated": [
+        "React.js",
+        "Python",
+        "FastAPI",
+        "Artificial Intelligence (AI)",
+        "Full-Stack Development",
+        "API Integration"
       ]
     },
     {
@@ -173,6 +204,7 @@ export const resumeData: ResumeData = {
         "Bcrypt"
       ],
       "github": "https://github.com/rushikeshxdev/store-rating-platform",
+      "demo": "https://store-rating-platform-ruddy.vercel.app/",
       "highlights": [
         "Role-Based Access Control (RBAC): Architected strict permission system for Admin, Store Owner, and User roles",
         "Advanced Security: Implemented JWT authentication with HttpOnly cookies, Bcrypt password hashing (12 salt rounds), SQL injection protection",
@@ -201,6 +233,7 @@ export const resumeData: ResumeData = {
         "JWT"
       ],
       "github": "https://github.com/rushikeshxdev/fintrak",
+      "demo": "https://fintrak-beta.vercel.app/",
       "highlights": [
         "Database Performance: Implemented Compound Indexing in MongoDB (sorting by UserID + Date), reducing query execution time by ~40%",
         "Data Visualization: Integrated Chart.js with Redux Toolkit for real-time interactive financial insights",
@@ -350,3 +383,4 @@ export const resumeData: ResumeData = {
     }
   ]
 };
+
